@@ -1,0 +1,64 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+
+<div class="col">
+    <div class="border">
+     {% if todos|length == 0 %} 
+     <div class="p-4">
+         <br>
+         <br>
+         <div class="alert alert-info text-center">
+             <p class="display-2" style="font-size: 30px;">No ToDos</p>
+         </div>
+         <br>
+         <br>
+     </div>
+     {%else%}
+     <div>
+         
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>#</th>
+                     <th>Title</th>
+                     <th>Status</th>
+                     <th>Priority</th>
+                     <th>Action</th>
+                 </tr>
+             </thead>
+
+             <tbody>
+                 {% for todo in todos%}
+                 <tr>
+                     <td>{{forloop.counter}}</td>
+                     <td>{{todo.title}}</td>
+                     <td>{%if todo.status == 'C'%}
+                         ✅
+                         {%else%}
+                         🕧
+                         {%endif%}
+                     </td>
+                     <td>{{todo.priority}}</td>
+                     <td><a href="/delete-todo/{{todo.id}}" class="btn" title="delete">❎ </a>
+                         {%if todo.status == 'P'%}
+                         <a href="/change-status/{{todo.id}}/C" title="Mark Completed" class="">✅</a>
+                         {%else%}
+                         <a href="/change-status/{{todo.id}}/P" title="Mark Pending" class="">🕒</a>{%endif%}
+                     </td>
+                 </tr>
+                 {%endfor%}
+             </tbody>
+         </table>
+     </div>
+     {%endif%}
+
+    </div>
+
+   </div>
+
+         
+
+
+{% endblock %}
